@@ -35,7 +35,7 @@ function App() {
     if (!token) {
       setLoggedIn(false);
     }
-    console.log(loggedIn);
+    // console.log(loggedIn);
     setLoading(false);
   }, []);
 
