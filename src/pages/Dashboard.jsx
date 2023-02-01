@@ -1,23 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { earningData } from '../data/dummy';
-import ActiveBooking from '../components/ActiveBooking';
-import useApi from '../hooks/useApi';
-import ordersApi from '../api/orders';
-import Loader from '../components/Loader';
+import { earningData } from "../data/dummy";
+import ActiveBooking from "../components/ActiveBooking";
+import useApi from "../hooks/useApi";
+import ordersApi from "../api/orders";
+import Loader from "../components/Loader";
 
 const Dashboard = () => {
-  const itemStyle = 'my-2 font-bold text-lg text-left';
-  const {
-    data: bookings,
-    error,
-    message,
-    loading,
-    request: loadBookings
-  } = useApi(ordersApi.getOrders);
-
-  useEffect(() => {
-    loadBookings();
-  }, []);
+  const itemStyle = "my-2 font-bold text-lg text-left";
+  const { data: bookings, loading } = useApi(ordersApi.getOrders);
 
   if (loading || !bookings) {
     return <Loader />;

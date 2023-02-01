@@ -1,36 +1,27 @@
-import React, { useEffect } from 'react';
-import { Header, Userlist, Button, NewClient } from '../components';
-import Modal from 'react-modal';
-import useApi from '../hooks/useApi';
-import customerApi from '../api/customer';
-import Loader from '../components/Loader';
+import React, { useState } from "react";
+import { Header, Userlist, Button, NewClient } from "../components";
+import Modal from "react-modal";
+import useApi from "../hooks/useApi";
+import customerApi from "../api/customer";
+import Loader from "../components/Loader";
 
 const Users = () => {
-  const [modalIsOpen, setIsOpen] = React.useState(false);
-  const {
-    data: customers,
-    error,
-    loading,
-    request: loadCustomers
-  } = useApi(customerApi.getCustomers);
-
-  useEffect(() => {
-    loadCustomers();
-  }, []);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const { data: customers, loading } = useApi(customerApi.getCustomers);
 
   if (loading || !customers) {
     return <Loader />;
   }
 
-  function openModal () {
+  function openModal() {
     setIsOpen(true);
   }
 
-  function closeModal () {
+  function closeModal() {
     setIsOpen(false);
   }
 
-  const itemStyle = 'my-2 font-bold text-lg text-left';
+  const itemStyle = "my-2 font-bold text-lg text-left";
 
   return (
     <>

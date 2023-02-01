@@ -1,37 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import Modal from 'react-modal';
+import React, { useState } from "react";
+import Modal from "react-modal";
 
-import { Header, Recieptlist, Button, NewReciept } from '../components';
-import useApi from '../hooks/useApi';
-import receiptsApi from '../api/reciepts';
-import Loader from '../components/Loader';
+import { Header, Recieptlist, Button, NewReciept } from "../components";
+import useApi from "../hooks/useApi";
+import receiptsApi from "../api/reciepts";
+import Loader from "../components/Loader";
 
 const Reciepts = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
-  const {
-    data: receipts,
-    loading,
-    error,
-    request: loadReceipts
-  } = useApi(receiptsApi.getReceipts);
-
-  useEffect(() => {
-    loadReceipts();
-  }, []);
+  const { data: receipts, loading } = useApi(receiptsApi.getReceipts);
 
   if (loading || !receipts) {
     return <Loader />;
   }
 
-  function openModal () {
+  function openModal() {
     setIsOpen(true);
   }
 
-  function closeModal () {
+  function closeModal() {
     setIsOpen(false);
   }
 
-  const itemStyle = 'my-2 font-bold text-lg text-left';
+  const itemStyle = "my-2 font-bold text-lg text-left";
 
   return (
     <>

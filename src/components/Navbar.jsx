@@ -1,12 +1,5 @@
-import React, { useEffect } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
-import { GrNotification } from "react-icons/gr";
-import { MdKeyboardArrowDown } from "react-icons/md";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
-
-import avatar from "../data/avatar.jpg";
-
-import { Notification, UserProfile } from ".";
 
 import { useStateContext } from "../context/ContextProvider";
 
@@ -28,15 +21,7 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
 );
 
 const Navbar = () => {
-  const {
-    activeMenu,
-    setActiveMenu,
-    isClicked,
-    setIsClicked,
-    handleClick,
-    screenSize,
-    setScreenSize,
-  } = useStateContext();
+  const { setActiveMenu } = useStateContext();
 
   return (
     <div className='flex justify-between p-2 md:mx-6 relative'>

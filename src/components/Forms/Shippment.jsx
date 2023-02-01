@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Header, AppForm, Button, Quote, AppFormField } from '..';
-import Modal from 'react-modal';
-import ordersApi from '../../api/orders';
-import Loader from '../Loader';
+import React, { useState } from "react";
+import { Header, Button, Quote } from "..";
+import Modal from "react-modal";
+import ordersApi from "../../api/orders";
+import Loader from "../Loader";
 
 const Shippment = () => {
   const [courier, setCourier] = useState();
@@ -14,19 +14,21 @@ const Shippment = () => {
   const [loading, setLoading] = useState(false);
   const [quote, setQuote] = useState({});
 
-  function openModal () {
+  function openModal() {
     setIsOpen(true);
   }
 
-  function closeModal () {
+  function closeModal() {
     setIsOpen(false);
   }
 
   const handleOnSubmit = async () => {
     setLoading(true);
-    const customerInfo = JSON.parse(window.sessionStorage.getItem('customerInfo'));
-    const packages = JSON.parse(window.sessionStorage.getItem('packages'));
-    const userData = JSON.parse(window.localStorage.getItem('userData'));
+    const customerInfo = JSON.parse(
+      window.sessionStorage.getItem("customerInfo")
+    );
+    const packages = JSON.parse(window.sessionStorage.getItem("packages"));
+    const userData = JSON.parse(window.localStorage.getItem("userData"));
     const body = {
       receiver_name: customerInfo.receiver_name,
       receiver_address: customerInfo.receiver_address,
@@ -43,10 +45,10 @@ const Shippment = () => {
       payment_type: paymentType,
       packages,
       served_by: `${userData.payload.employee.first_name} ${userData.payload.employee.last_name}`,
-      branch_name: `${userData.payload.branch.name}`
+      branch_name: `${userData.payload.branch.name}`,
     };
     const response = await ordersApi.createOrder(body);
-    if (!response.ok) return (setLoading(false), console.log(response.data));
+    if (!response.ok) return setLoading(false);
     setQuote(response.data[0].payload.quote);
     setLoading(false);
     openModal();
@@ -75,14 +77,16 @@ const Shippment = () => {
       </Modal>
       <div className='flex flex-col justify-evenly w-full h-full px-5 my-5'>
         <Header category='Shipment Info' title='Create Order' />
-        <form
-          onSubmit={handleOnSubmit}
-        >
+        <form onSubmit={handleOnSubmit}>
           {/* Courier */}
           <div className='text-left my-4'>
             <label className='font-bold'>Courier</label>
             <div className='flex items-center justify-between bg-slate-200 p-2 rounded-md mt-3'>
-              <select onChange={(e) => setCourier(e.target.value)} name='client' className='w-full bg-transparent border-0'>
+              <select
+                onChange={(e) => setCourier(e.target.value)}
+                name='client'
+                className='w-full bg-transparent border-0'
+              >
                 <option value='select'>Courier</option>
                 <option value='DHL'>DHL</option>
                 <option value='UPS'>UPS</option>
@@ -110,7 +114,11 @@ const Shippment = () => {
           <div className='text-left my-4'>
             <label className='font-bold'>Location</label>
             <div className='flex items-center justify-between bg-slate-200 p-2 rounded-md mt-3'>
-              <select onChange={(e) => setLocation(e.target.value)} name='client' className='w-full bg-transparent border-0'>
+              <select
+                onChange={(e) => setLocation(e.target.value)}
+                name='client'
+                className='w-full bg-transparent border-0'
+              >
                 <option value='select'>Location</option>
                 <option value='US'>USA</option>
                 <option value='LND'>London</option>
@@ -135,7 +143,11 @@ const Shippment = () => {
           <div className='text-left my-4'>
             <label className='font-bold'>Insurance</label>
             <div className='flex items-center justify-between bg-slate-200 p-2 rounded-md mt-3'>
-              <select onChange={(e) => setInsurance(e.target.value)} name='client' className='w-full bg-transparent border-0'>
+              <select
+                onChange={(e) => setInsurance(e.target.value)}
+                name='client'
+                className='w-full bg-transparent border-0'
+              >
                 <option value='select'>Insurance</option>
                 <option value='FR'>Free</option>
                 <option value='PM'>Premium</option>
@@ -148,7 +160,11 @@ const Shippment = () => {
           <div className='text-left my-4'>
             <label className='font-bold'>Payment Type</label>
             <div className='flex items-center justify-between bg-slate-200 p-2 rounded-md mt-3'>
-              <select onChange={(e) => setPaymentType(e.target.value)} name='client' className='w-full bg-transparent border-0'>
+              <select
+                onChange={(e) => setPaymentType(e.target.value)}
+                name='client'
+                className='w-full bg-transparent border-0'
+              >
                 <option value='select'>Payment Type</option>
                 <option value='CASH'>CASH</option>
                 <option value='POS'>POS</option>

@@ -3,36 +3,25 @@ import {
   AiOutlineSetting,
   AiOutlineShoppingCart,
   AiOutlineUser,
-  AiOutlineAreaChart,
-  AiOutlineBarChart,
-  AiOutlineStock,
 } from "react-icons/ai";
 import {
   FiShoppingBag,
-  FiEdit,
-  FiPieChart,
   FiBarChart,
   FiCreditCard,
   FiStar,
   FiShoppingCart,
 } from "react-icons/fi";
 import {
-  BsKanban,
-  BsBarChart,
   BsFillHandThumbsUpFill,
   BsBoxSeam,
   BsCurrencyDollar,
   BsShield,
   BsChatLeft,
 } from "react-icons/bs";
-import { BiColorFill } from "react-icons/bi";
-import { FaToiletPaper } from "react-icons/fa";
-import { RiContactsLine, RiStockLine, RiFilePaper2Line } from "react-icons/ri";
+import { RiFilePaper2Line } from "react-icons/ri";
 import { TbFileInvoice } from "react-icons/tb";
-import { MdOutlineSupervisorAccount } from "react-icons/md";
 import { HiOutlineRefresh } from "react-icons/hi";
 import { TiTick } from "react-icons/ti";
-import { GiLouvrePyramid } from "react-icons/gi";
 import { GrLocation } from "react-icons/gr";
 import avatar from "./avatar.jpg";
 import avatar2 from "./avatar2.jpg";
@@ -45,7 +34,6 @@ import product4 from "./product4.jpg";
 import product5 from "./product5.jpg";
 import product6 from "./product6.jpg";
 import product7 from "./product7.jpg";
-import product8 from "./product8.jpg";
 
 export const gridOrderImage = (props) => (
   <div>

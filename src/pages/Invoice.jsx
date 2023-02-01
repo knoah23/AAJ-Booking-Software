@@ -1,36 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { Invoicelist, Header, Button, NewInvoice } from '../components';
-import Modal from 'react-modal';
-import useApi from '../hooks/useApi';
-import invoiceApi from '../api/invoice';
-import Loader from '../components/Loader';
+import React, { useState } from "react";
+import { Invoicelist, Header, Button, NewInvoice } from "../components";
+import Modal from "react-modal";
+import useApi from "../hooks/useApi";
+import invoiceApi from "../api/invoice";
+import Loader from "../components/Loader";
 
 const Invoice = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
-  const {
-    data: invoices,
-    loading,
-    error,
-    request: loadInvoices
-  } = useApi(invoiceApi.getInvoices);
-
-  useEffect(() => {
-    loadInvoices();
-  }, []);
+  const { data: invoices, loading } = useApi(invoiceApi.getInvoices);
 
   if (loading || !invoices) {
     return <Loader />;
   }
 
-  function openModal () {
+  function openModal() {
     setIsOpen(true);
   }
 
-  function closeModal () {
+  function closeModal() {
     setIsOpen(false);
   }
 
-  const itemStyle = 'my-2 font-bold text-lg text-left';
+  const itemStyle = "my-2 font-bold text-lg text-left";
 
   return (
     <>
