@@ -7,4 +7,3 @@ export { default as Users } from "./Users";
 export { default as Login } from "./Login";
 export { default as CustomerInfo } from "./CustomerInfo";
 export { default as PackageSection } from "./PackageSection";
-export { default as ShipmentSection } from "./ShipmentSection";

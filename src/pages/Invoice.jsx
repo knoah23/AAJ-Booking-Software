@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Invoicelist, Header, Button, NewInvoice } from "../components";
 import Modal from "react-modal";
 import useApi from "../hooks/useApi";
@@ -7,7 +7,16 @@ import Loader from "../components/Loader";
 
 const Invoice = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
-  const { data: invoices, loading } = useApi(invoiceApi.getInvoices);
+  const {
+    data: invoices,
+    loading,
+    error,
+    request: loadInvoices,
+  } = useApi(invoiceApi.getInvoices);
+
+  useEffect(() => {
+    loadInvoices();
+  }, []);
 
   if (loading || !invoices) {
     return <Loader />;
@@ -42,11 +51,10 @@ const Invoice = () => {
       </Modal>
       <div className='mt-12'>
         <div className=' flex justify-center'>
-          <div className='flex flex-col w-full px-5'>
-            <Header category='Page' title='Invoice' />
+          <div className='flex flex-col w-full px-32'>
             <div className='mb-5'>
               <Button
-                bgColor='#001E4A'
+                bgColor='black'
                 text='Create New'
                 color='white'
                 size='text-md'

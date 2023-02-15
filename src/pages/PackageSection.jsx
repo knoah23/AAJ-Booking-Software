@@ -1,10 +1,9 @@
 import React from "react";
-import { Package, Header } from "../components";
+import { Package } from "../components";
 
 const PackageSection = () => {
   return (
-    <div className='w-full h-full px-5 my-5'>
-      <Header category='Package Info' title='Create Order' />
+    <div className='w-full h-full px-96 my-5'>
       <Package />
     </div>
   );

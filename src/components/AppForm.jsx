@@ -1,11 +1,11 @@
-import React from 'react';
-import { Formik } from 'formik';
+import React from "react";
+import { Formik } from "formik";
 
-export default function AppForm ({
+export default function AppForm({
   initialValues,
   onSubmit,
   validationSchema,
-  children
+  children,
 }) {
   return (
     <Formik
@@ -15,7 +15,7 @@ export default function AppForm ({
     >
       {({ handleSubmit }) => (
         <form
-          className='flex justify-evenly flex-col text-center p-1'
+          className='flex flex-col gap-10 mt-10 bg-white p-8 rounded-md justify-center'
           onSubmit={handleSubmit}
         >
           {children}

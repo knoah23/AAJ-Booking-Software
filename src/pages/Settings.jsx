@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Header, Profile, Password } from "../components";
+import React, { useEffect, useState } from 'react';
+import { Header, Profile, Password } from '../components';
 
 const Settings = () => {
   const [toggle, setToggle] = useState(1);
@@ -17,8 +17,8 @@ const Settings = () => {
               <div
                 className={
                   toggle === 1
-                    ? "text-white bg-[#001E4A] py-2 px-3 rounded-md font-bold m-1 cursor-pointer"
-                    : "text-[#001E4A] bg-[#a4dff5] px-3 py-2 font-bold m-1 cursor-pointer rounded-md"
+                    ? 'text-white bg-[#001E4A] py-2 px-3 rounded-md font-bold m-1 cursor-pointer'
+                    : 'text-[#001E4A] bg-[#a4dff5] px-3 py-2 font-bold m-1 cursor-pointer rounded-md'
                 }
                 onClick={() => toggleTab(1)}
               >
@@ -28,8 +28,8 @@ const Settings = () => {
               <div
                 className={
                   toggle === 2
-                    ? "text-white bg-[#001E4A] py-2 px-3 rounded-md font-bold m-1 cursor-pointer"
-                    : "text-[#001E4A] bg-[#a4dff5] px-3 py-2 font-bold m-1 cursor-pointer rounded-md"
+                    ? 'text-white bg-[#001E4A] py-2 px-3 rounded-md font-bold m-1 cursor-pointer'
+                    : 'text-[#001E4A] bg-[#a4dff5] px-3 py-2 font-bold m-1 cursor-pointer rounded-md'
                 }
                 onClick={() => toggleTab(2)}
               >
@@ -37,10 +37,10 @@ const Settings = () => {
               </div>
             </div>
             <div>
-              <div className={toggle === 1 ? "block w-full" : "hidden"}>
+              <div className={toggle === 1 ? 'block w-full' : 'hidden'}>
                 <Profile />
               </div>
-              <div className={toggle === 2 ? "block w-full" : "hidden"}>
+              <div className={toggle === 2 ? 'block w-full' : 'hidden'}>
                 <Password />
               </div>
             </div>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Header, Button, Quote } from "..";
+import { Header, AppForm, Button, Quote, AppFormField } from "..";
 import Modal from "react-modal";
 import ordersApi from "../../api/orders";
 import Loader from "../Loader";
@@ -48,7 +48,7 @@ const Shippment = () => {
       branch_name: `${userData.payload.branch.name}`,
     };
     const response = await ordersApi.createOrder(body);
-    if (!response.ok) return setLoading(false);
+    if (!response.ok) return setLoading(false), console.log(response.data);
     setQuote(response.data[0].payload.quote);
     setLoading(false);
     openModal();
@@ -60,7 +60,7 @@ const Shippment = () => {
 
   return (
     <>
-      <Modal
+      {/* <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel='Test Modal'
@@ -74,14 +74,16 @@ const Shippment = () => {
           onclick={closeModal}
         />
         <Quote data={quote} />
-      </Modal>
-      <div className='flex flex-col justify-evenly w-full h-full px-5 my-5'>
-        <Header category='Shipment Info' title='Create Order' />
-        <form onSubmit={handleOnSubmit}>
+      </Modal> */}
+      <div className='flex flex-col justify-evenly w-full h-full px-96 my-5'>
+        <form
+          onSubmit={handleOnSubmit}
+          className='flex flex-col gap-10 mt-10 bg-white p-8 rounded-md justify-center'
+        >
           {/* Courier */}
-          <div className='text-left my-4'>
-            <label className='font-bold'>Courier</label>
-            <div className='flex items-center justify-between bg-slate-200 p-2 rounded-md mt-3'>
+          <div className='w-full'>
+            <label>Courier</label>
+            <div className='flex w-full items-center justify-between  p-4 rounded-md border border-gray5 text-gray3'>
               <select
                 onChange={(e) => setCourier(e.target.value)}
                 name='client'
@@ -95,9 +97,9 @@ const Shippment = () => {
           </div>
 
           {/* Type */}
-          <div className='text-left my-4'>
-            <label className='font-bold'>Booking Type</label>
-            <div className='flex items-center justify-between bg-slate-200 p-2 rounded-md mt-3'>
+          <div className='w-full'>
+            <label>Booking Type</label>
+            <div className='flex w-full items-center justify-between  p-4 rounded-md border border-gray5 text-gray3'>
               <select
                 name='transport'
                 className='w-full bg-transparent border-0'
@@ -111,9 +113,9 @@ const Shippment = () => {
           </div>
 
           {/* Location */}
-          <div className='text-left my-4'>
-            <label className='font-bold'>Location</label>
-            <div className='flex items-center justify-between bg-slate-200 p-2 rounded-md mt-3'>
+          {/* <div className='w-full'>
+            <label>Location</label>
+            <div className='flex w-full items-center justify-between  p-4 rounded-md border border-gray5 text-gray3'>
               <select
                 onChange={(e) => setLocation(e.target.value)}
                 name='client'
@@ -125,12 +127,12 @@ const Shippment = () => {
                 <option value='CA'>Canada</option>
               </select>
             </div>
-          </div>
+          </div> */}
 
           {/* Rate */}
-          {/* <div className='text-left my-4'>
-            <label className='font-bold'>Rate</label>
-            <div className='flex items-center justify-between bg-slate-200 p-2 rounded-md mt-3'>
+          {/* <div className='w-full'>
+            <label>Rate</label>
+            <div className='flex w-full items-center justify-between  p-4 rounded-md border border-gray5 text-gray3'>
               <select onChange={(e) => setRate(e.target.value)} name='client' className='w-full bg-transparent border-0'>
                 <option value='select'>Rate</option>
                 <option value='SR'>Standard Rate</option>
@@ -140,9 +142,9 @@ const Shippment = () => {
           </div> */}
 
           {/* Insurance */}
-          <div className='text-left my-4'>
-            <label className='font-bold'>Insurance</label>
-            <div className='flex items-center justify-between bg-slate-200 p-2 rounded-md mt-3'>
+          <div className='w-full'>
+            <label>Insurance</label>
+            <div className='flex w-full items-center justify-between  p-4 rounded-md border border-gray5 text-gray3'>
               <select
                 onChange={(e) => setInsurance(e.target.value)}
                 name='client'
@@ -156,28 +158,28 @@ const Shippment = () => {
             </div>
           </div>
 
-          {/* Payment */}
-          <div className='text-left my-4'>
-            <label className='font-bold'>Payment Type</label>
-            <div className='flex items-center justify-between bg-slate-200 p-2 rounded-md mt-3'>
+          {/* Mailcious */}
+          <div className='w-full'>
+            <label>Mailcious</label>
+            <div className='flex w-full items-center justify-between  p-4 rounded-md border border-gray5 text-gray3'>
               <select
-                onChange={(e) => setPaymentType(e.target.value)}
+                // onChange={(e) => setInsurance(e.target.value)}
                 name='client'
                 className='w-full bg-transparent border-0'
               >
-                <option value='select'>Payment Type</option>
-                <option value='CASH'>CASH</option>
-                <option value='POS'>POS</option>
-                <option value='TRANSFER'>TRANSFER</option>
+                <option value='select'>Ziploc</option>
+                <option value='FR'>Free</option>
+                <option value='PM'>Premium</option>
+                <option value='SD'>Standard</option>
               </select>
             </div>
           </div>
 
           <button
-            className='text-white w-full bg-[#001E4A] py-3 border-0 font-bold m-1 cursor-pointer rounded-md'
+            className='bg-primary text-white py-4 px-10 rounded-full hover:bg-[#EE4700]'
             type='submit'
           >
-            Create
+            Continue
           </button>
         </form>
       </div>

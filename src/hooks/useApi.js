@@ -11,6 +11,8 @@ const useApi = (apiFunc, params) => {
     const response = await apiFunc(params);
     setLoading(false);
 
+    if (response.status === 401) return window.location.replace('/login');
+
     if (!response.ok) return (setError(true), setErrorMessage(response.data));
 
     setError(false);

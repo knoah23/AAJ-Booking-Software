@@ -1,22 +1,25 @@
-import React from 'react';
-import Logo from '../data/AAJ.svg';
-import './loader.css';
+import React from "react";
+import "./loader.css";
 
-function Loader () {
+const Loader = () => {
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100vh',
-        background: '#FAFBFB',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}
-    >
-      <img src={Logo} alt='logo' className='loader' />
+    <div className='flex justify-center items-center h-screen'>
+      <div className='lds-spinner'>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </div>
   );
-}
+};
 
 export default Loader;

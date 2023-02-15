@@ -1,13 +1,14 @@
-import React from 'react';
-import { useFormikContext } from 'formik';
+import React from "react";
+import { useFormikContext } from "formik";
 
-const AppFormField = ({ name, title, type, margin = '1em 0' }) => {
-  const { values, handleBlur, handleChange, errors, touched } = useFormikContext();
+const AppFormField = ({ name, title, type, auto }) => {
+  const { values, handleBlur, handleChange, errors, touched } =
+    useFormikContext();
 
   return (
-    <div className='w-full text-left' style={{ margin: margin }}>
-      <label style={{ fontWeight: 'bolder' }}>{title}</label>
-      <div className='flex items-center justify-between bg-slate-100 p-3 rounded-md my-2 focus:outline-none'>
+    <div className='w-full text-left'>
+      <label>{title}</label>
+      <div className='w-full p-4 rounded-md border border-gray5 text-gray3'>
         <input
           placeholder={title}
           onBlur={handleBlur}
@@ -16,10 +17,13 @@ const AppFormField = ({ name, title, type, margin = '1em 0' }) => {
           name={name}
           type={type}
           value={values[name]}
-          className='w-full border-0 bg-transparent'
+          autoComplete={auto}
+          className='w-full border-0 bg-none focus:outline-none'
         />
       </div>
-      {touched[name] && errors[name] ? <div className='text-red-500'>{errors[name]}</div> : null}
+      {touched[name] && errors[name] ? (
+        <div className='text-red-500'>{errors[name]}</div>
+      ) : null}
     </div>
   );
 };

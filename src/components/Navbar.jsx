@@ -1,64 +1,48 @@
-import { AiOutlineMenu } from "react-icons/ai";
-import { TooltipComponent } from "@syncfusion/ej2-react-popups";
+import React from "react";
 
-import { useStateContext } from "../context/ContextProvider";
+import logo from "../assets/logo.png";
 
-const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
-  <TooltipComponent content={title} position='BottomCenter'>
-    <button
-      type='button'
-      onClick={customFunc}
-      style={{ color }}
-      className='relative text-xl rounded-full p-3 hover:bg-light-gray'
-    >
-      <span
-        style={{ background: dotColor }}
-        className='absolute inline-flex rounded-full h-2 w-2 right-2 top-2'
-      />
-      {icon}
-    </button>
-  </TooltipComponent>
-);
-
-const Navbar = () => {
-  const { setActiveMenu } = useStateContext();
-
+const Navbar1 = () => {
   return (
-    <div className='flex justify-between p-2 md:mx-6 relative'>
-      <NavButton
-        title='Menu'
-        customFunc={() => setActiveMenu((prevActiveMenu) => !prevActiveMenu)}
-        color='orange'
-        icon={<AiOutlineMenu />}
-      />
-
-      {/* <div className='flex'>
-        <NavButton
-          dotColor='#FF0000'
-          title='Notification'
-          customFunc={() => handleClick("notification")}
-          color='orange'
-          icon={<GrNotification />}
-        />
-        <TooltipComponent position='BottomCenter' content='Profile'>
-          <div
-            className='flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg '
-            onClick={() => handleClick("userProfile")}
-          >
-            <img src={avatar} alt='profile' className='rounded-full w-8 h-8' />
-            <p>
-              <span className='text-gray-400 text-14'>Hi, </span>{" "}
-              <span className='text-gray-00 font-bold ml-1 text-14'>Noah</span>
-            </p>
-            <MdKeyboardArrowDown className='text-gray-400 tet-14' />
-          </div>
-        </TooltipComponent>
-
-        {isClicked.notification && <Notification />}
-        {isClicked.userProfile && <UserProfile />}
-      </div> */}
-    </div>
+    <nav className='flex justify-between items-center bg-white px-32 py-5'>
+      <a href='/'>
+        <img src={logo} alt='logo' className='w-16' />
+      </a>
+      <ul className='flex items-center justify-center gap-12'>
+        <li>
+          <a href='/Dashboard' className='hover:text-primary'>
+            Home
+          </a>
+        </li>
+        <li>
+          <a href='/Orders' className='hover:text-primary'>
+            Shipment
+          </a>
+        </li>
+        <li>
+          <a href='/Invoice' className='hover:text-primary'>
+            Invoice
+          </a>
+        </li>
+        <li>
+          <a href='/Reciepts' className='hover:text-primary'>
+            Reciept
+          </a>
+        </li>
+        <li>
+          <a href='/Users' className='hover:text-primary'>
+            Users
+          </a>
+        </li>
+      </ul>
+      <a
+        href='/'
+        className='bg-primary text-white py-4 px-10 rounded-full hover:bg-[#EE4700]'
+      >
+        Logout
+      </a>
+    </nav>
   );
 };
 
-export default Navbar;
+export default Navbar1;
