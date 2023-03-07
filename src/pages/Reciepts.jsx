@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import Modal from 'react-modal';
+import React, { useEffect, useState } from "react";
+import Modal from "react-modal";
 
-import { Header, Recieptlist, Button, NewReciept } from '../components';
-import useApi from '../hooks/useApi';
-import receiptsApi from '../api/reciepts';
-import Loader from '../components/Loader';
+import { Header, Recieptlist, Button, NewReciept } from "../components";
+import useApi from "../hooks/useApi";
+import receiptsApi from "../api/reciepts";
+import Loader from "../components/Loader";
 
 const Reciepts = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -12,7 +12,7 @@ const Reciepts = () => {
     data: receipts,
     loading,
     error,
-    request: loadReceipts
+    request: loadReceipts,
   } = useApi(receiptsApi.getReceipts);
 
   useEffect(() => {
@@ -23,66 +23,58 @@ const Reciepts = () => {
     return <Loader />;
   }
 
-  function openModal () {
+  function openModal() {
     setIsOpen(true);
   }
 
-  function closeModal () {
+  function closeModal() {
     setIsOpen(false);
   }
 
-  const itemStyle = 'my-2 font-bold text-lg text-left';
+  const itemStyle = "p-5";
 
   return (
     <>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel='Test Modal'
-      >
+      <Modal isOpen={modalIsOpen} contentLabel='Test Modal'>
         <Button
-          bgColor='#001E4A'
+          bgColor='black'
           text='Close'
           color='white'
-          size='text-sm'
+          size='text-md'
           borderRadius='5px'
           onclick={closeModal}
         />
         <NewReciept />
       </Modal>
 
-      <div className='mt-12'>
-        <div className=' flex justify-center'>
-          <div className='flex flex-col w-full px-5'>
-            <Header category='Page' title='Receipts' />
-            <div className='mb-5'>
-              <Button
-                bgColor='#001E4A'
-                text='Create New'
-                color='white'
-                size='text-md'
-                borderRadius='5px'
-                onclick={openModal}
-              />
-            </div>
-            <div className='bg-white mt-5 rounded-xl px-6 py-5 w-full'>
-              <table className='w-full'>
-                <tr>
-                  <th>
-                    <input type='checkbox' />
-                  </th>
-                  <th className={itemStyle}>Receipt</th>
-                  <th className={itemStyle}>Date & Time</th>
-                  <th className={itemStyle}>Shipper</th>
-                  <th className={itemStyle}>Specification</th>
-                  <th className={itemStyle}>Total</th>
-                </tr>
-                {receipts.map((item) => (
-                  <Recieptlist key={item.id} item={item} />
-                ))}
-              </table>
-            </div>
-          </div>
+      <div className='w-full px-32 text-center flex flex-col justify-center'>
+        <div className='my-5 w-full flex items-center justify-end'>
+          <Button
+            bgColor='black'
+            text='Create'
+            color='white'
+            size='text-md'
+            borderRadius='5px'
+            onclick={openModal}
+          />
+        </div>
+        <div className='mt-5 w-full'>
+          <table className='table-auto w-full text-left text-[#1E1E1E]'>
+            <thead className='bg-[#F5F5F5]'>
+              <tr>
+                <th className={itemStyle}>Receipt</th>
+                <th className={itemStyle}>Date & Time</th>
+                <th className={itemStyle}>Shipper</th>
+                <th className={itemStyle}>Specification</th>
+                <th className={itemStyle}>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {receipts.map((item) => (
+                <Recieptlist key={item.id} item={item} />
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </>

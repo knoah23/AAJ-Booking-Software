@@ -1,8 +1,15 @@
-import React from "react";
+import React from 'react';
 
-import logo from "../assets/logo.png";
+import logo from '../assets/logo.png';
 
 const Navbar1 = () => {
+  const handleOnPressLogout = () => {
+    if (window.confirm('Are you sure you want to log out?')) {
+      window.localStorage.removeItem('token');
+      window.location.replace('/login');
+    }
+  };
+
   return (
     <nav className='flex justify-between items-center bg-white px-32 py-5'>
       <a href='/'>
@@ -35,12 +42,12 @@ const Navbar1 = () => {
           </a>
         </li>
       </ul>
-      <a
-        href='/'
+      <button
+        onClick={handleOnPressLogout}
         className='bg-primary text-white py-4 px-10 rounded-full hover:bg-[#EE4700]'
       >
         Logout
-      </a>
+      </button>
     </nav>
   );
 };

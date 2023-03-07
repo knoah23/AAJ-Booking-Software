@@ -42,8 +42,8 @@ const generateQuote = async (body) => {
   return response;
 };
 
-const raiseInvoice = async (body) => {
-  const response = await bookingClient.post(`${endpoint}raise_invoice/`, body);
+const processOrder = async (id, body) => {
+  const response = await bookingClient.post(`${endpoint}${id}process_order/`, body);
   return response;
 };
 
@@ -67,6 +67,11 @@ const deleteOrder = async (id) => {
   return response;
 };
 
+const getAddons = async () => {
+  const response = await bookingClient.get(`${endpoint}addons/`);
+  return response;
+};
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getOrders,
@@ -79,7 +84,8 @@ export default {
   updateOrderCategory,
   deleteOrderCategory,
   generateQuote,
-  raiseInvoice,
+  processOrder,
   readOrder,
-  patchOrder
+  patchOrder,
+  getAddons
 };

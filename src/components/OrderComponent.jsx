@@ -1,18 +1,19 @@
-import React from "react";
+import React from 'react';
 
-export default function OrderComponent({ item }) {
+export default function OrderComponent ({ item, handleOnClick }) {
   return (
-    <div
-      className={`flex flex-col w-full gap-10 bg-white items-center justify-between p-5 rounded-xl mb-10`}
+    <button
+      onClick={handleOnClick}
+      className='flex flex-col w-full gap-10 text-left bg-white items-center justify-between p-5 rounded-xl mb-10 cursor-pointer'
     >
-      <div className='flex w-full justify-between items-center'>
+      <div className='flex w-full text-left justify-between items-center'>
         <div>
-          <h1 className='font-bold text-3xl text-[#828282]'>
-            Black Wooden Beads
+          <h1 className='font-bold text-3xl capitalize text-[#828282]'>
+            {item.description}
           </h1>
           <p className='text-[#E0E0E0]'>#{item.id}</p>
         </div>
-        <h1 className='font-bold text-3xl text-[#828282]'>{item.weight} Kg</h1>
+        <h1 className='font-bold text-2xl text-[#828282]'>{item.weight} Kg</h1>
       </div>
       <div className='flex w-full justify-start items-center gap-4'>
         <svg
@@ -35,10 +36,10 @@ export default function OrderComponent({ item }) {
 
       <div className='flex justify-between items-center w-full'>
         <h1 className='text-[#828282]'>{item.sender_name}</h1>
-        <h1 className='font-bold text-3xl text-[#828282]'>
-          10,000{item.price}
+        <h1 className='font-bold text-2xl text-[#828282]'>
+          {item.total.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}
         </h1>
       </div>
-    </div>
+    </button>
   );
 }

@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import { Header, Userlist, Button, NewClient } from '../components';
-import Modal from 'react-modal';
-import useApi from '../hooks/useApi';
-import customerApi from '../api/customer';
-import Loader from '../components/Loader';
+import React, { useEffect } from "react";
+import { Header, Userlist, Button, NewClient } from "../components";
+import Modal from "react-modal";
+import useApi from "../hooks/useApi";
+import customerApi from "../api/customer";
+import Loader from "../components/Loader";
 
 const Users = () => {
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -11,7 +11,7 @@ const Users = () => {
     data: customers,
     error,
     loading,
-    request: loadCustomers
+    request: loadCustomers,
   } = useApi(customerApi.getCustomers);
 
   useEffect(() => {
@@ -22,15 +22,15 @@ const Users = () => {
     return <Loader />;
   }
 
-  function openModal () {
+  function openModal() {
     setIsOpen(true);
   }
 
-  function closeModal () {
+  function closeModal() {
     setIsOpen(false);
   }
 
-  const itemStyle = 'my-2 font-bold text-lg text-left';
+  const itemStyle = "my-2 font-bold text-lg text-left";
 
   return (
     <>
@@ -40,49 +40,31 @@ const Users = () => {
         contentLabel='Test Modal'
       >
         <Button
-          bgColor='#001E4A'
+          bgColor='black'
           text='Close'
           color='white'
-          size='text-sm'
+          size='text-md'
           borderRadius='5px'
           onclick={closeModal}
         />
         <NewClient />
       </Modal>
 
-      <div className='mt-12'>
-        <div className=' flex justify-center'>
-          <div className='flex flex-col w-full px-5'>
-            <Header category='Page' title='Customers' />
-            <div className='mb-5'>
-              <Button
-                bgColor='#001E4A'
-                text='Create New'
-                color='white'
-                size='text-md'
-                borderRadius='5px'
-                onclick={openModal}
-              />
-            </div>
-            <div className='bg-white mt-5 rounded-xl px-6 py-5 w-full'>
-              <table className='w-full'>
-                <tr>
-                  <th>
-                    <input type='checkbox' />
-                  </th>
-                  <th className={itemStyle}>Type</th>
-                  <th className={itemStyle}>Full Name</th>
-                  <th className={itemStyle}>Phone Number</th>
-                  <th className={itemStyle}>Email</th>
-                  <th className={itemStyle}>Address</th>
-                  <th className={itemStyle}>Actions</th>
-                </tr>
-                {customers.map((item) => (
-                  <Userlist key={item.fullname} item={item} />
-                ))}
-              </table>
-            </div>
-          </div>
+      <div className='w-full px-32 text-center flex mt-36 flex-col justify-center'>
+        <div className='my-5 w-full flex items-center justify-end'>
+          <Button
+            bgColor='#0000'
+            text='Create New'
+            color='white'
+            size='text-md'
+            borderRadius='5px'
+            onclick={openModal}
+          />
+        </div>
+        <div className='mt-5 w-full flex flex-wrap gap-10 items-center justify-start'>
+          {customers.map((item) => (
+            <Userlist key={item.fullname} item={item} />
+          ))}
         </div>
       </div>
     </>

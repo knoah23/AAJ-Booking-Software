@@ -22,3 +22,6 @@ export { default as LoginForm } from "./Forms/LoginForm";
 export { default as Customer } from "./Forms/Customer";
 export { default as Package } from "./Forms/Package";
 export { default as Shippment } from "./Forms/Shippment";
+export { default as BackHeader } from "./BackHeader";
+export { default as OrderComponent } from "./OrderComponent";
+export { default as OrderModal } from "./OrderModal";

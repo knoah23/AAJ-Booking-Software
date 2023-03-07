@@ -15,6 +15,7 @@
     "@syncfusion/ej2-react-schedule": "^19.4.50",
     "apisauce": "^2.1.6",
     "axios": "^1.2.1",
+    "country-state-city": "^3.1.2",
     "formik": "^2.2.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

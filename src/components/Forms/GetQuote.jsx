@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const GetQuote = () => {
   return (
@@ -6,7 +6,7 @@ const GetQuote = () => {
       <div className='flex gap-6'>
         <div className='w-full'>
           <label>From</label>
-          <div className='flex w-full items-center justify-between  p-4 rounded-md border border-gray5 text-gray3'>
+          <div className='flex w-full items-center justify-between  p-3 rounded-md border border-gray5 text-gray3'>
             <select
               name='client'
               className='bg-transparent border-0 w-full focus:outline-none'
@@ -21,7 +21,7 @@ const GetQuote = () => {
 
         <div className='w-full'>
           <label>To</label>
-          <div className='flex w-full items-center justify-between  p-4 rounded-md border border-gray5 text-gray3'>
+          <div className='flex w-full items-center justify-between  p-3 rounded-md border border-gray5 text-gray3'>
             <select
               name='client'
               className=' bg-transparent border-0 w-full focus:outline-none'
@@ -35,27 +35,37 @@ const GetQuote = () => {
         </div>
       </div>
 
-      <div className='flex gap-6'>
+      <div className='flex gap-6 items-center'>
         <div>
-          <label>Weight (kg)</label>
+          <label>Actual Weight (kg)</label>
           <input
             type='text'
-            className='w-full p-4 rounded-md border border-gray5 text-gray3'
+            className='w-full p-3 rounded-md border border-gray5 text-gray3'
           />
         </div>
 
         <div>
+          <label>Dimensional Weight (kg)</label>
+          <input
+            type='text'
+            className='w-full p-3 rounded-md border border-gray5 text-gray3'
+          />
+        </div>
+      </div>
+
+      <div>
+        <div className='w-full'>
           <label>Total Value</label>
           <input
             type='text'
-            className='w-full p-4 rounded-md border border-gray5 text-gray3'
+            className='w-full p-3 rounded-md border border-gray5 text-gray3'
           />
         </div>
       </div>
 
       <div className='w-full'>
         <label>Delivery rate</label>
-        <div className='flex w-full items-center justify-between  p-4 rounded-md border border-gray5 text-gray3'>
+        <div className='flex w-full items-center justify-between  p-3 rounded-md border border-gray5 text-gray3'>
           <select
             name='client'
             className=' bg-transparent border-0 w-full focus:outline-none'

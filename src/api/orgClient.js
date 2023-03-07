@@ -1,7 +1,7 @@
 import { create } from 'apisauce';
 
 const apiClient = create({
-  baseURL: 'https://cors-proxy-server.herokuapp.com/http://management.aajexpress.org/api/v1/'
+  baseURL: 'https://cors-proxy-server.herokuapp.com/https://management.aajexpress.org/api/v1/'
 });
 
 apiClient.addAsyncRequestTransform(async (request) => {

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { AppForm, AppFormField } from '..';
-import * as yup from 'yup';
-import invoiceApi from '../../api/invoice';
+import React, { useState } from "react";
+import { AppForm, AppFormField } from "..";
+import * as yup from "yup";
+import invoiceApi from "../../api/invoice";
 
 const validationSchema = yup.object().shape({
   shipTo: yup.string().required(),
@@ -13,7 +13,7 @@ const validationSchema = yup.object().shape({
   total: yup.number().required(),
   raisedBy: yup.string().required(),
   description: yup.string().required(),
-  orderID: yup.string().required()
+  orderID: yup.string().required(),
 });
 
 const NewInvoice = () => {
@@ -23,7 +23,17 @@ const NewInvoice = () => {
   const [branch, setBranch] = useState();
   const [created, setCreated] = useState(false);
 
-  const handleOnSubmit = async ({ shipTo, trackingNo, weight, rate, subTotal, tax, raisedBy, description, orderID }) => {
+  const handleOnSubmit = async ({
+    shipTo,
+    trackingNo,
+    weight,
+    rate,
+    subTotal,
+    tax,
+    raisedBy,
+    description,
+    orderID,
+  }) => {
     const body = {
       ship_to: shipTo,
       tracking_no: trackingNo,
@@ -37,7 +47,7 @@ const NewInvoice = () => {
       branch_name: branch,
       raise_by: raisedBy,
       description,
-      order: orderID
+      order: orderID,
     };
     const response = await invoiceApi.createInvoice(body);
     if (!response.ok) return console.log(response.data);
@@ -45,43 +55,57 @@ const NewInvoice = () => {
   };
 
   if (created) {
-    window.alert('Invoice Created Successfully');
+    window.alert("Invoice Created Successfully");
   }
 
   return (
     <div className='flex text-center flex-col justify-evenly mt-6'>
+      <h1 className='font-bold text-3xl'>New Invoice</h1>
       <AppForm
         initialValues={{
-          shipTo: '',
-          trackingNo: '',
-          weight: '',
-          rate: '',
-          subTotal: '',
-          tax: '',
-          total: '',
-          raisedBy: '',
-          description: '',
-          orderID: ''
+          shipTo: "",
+          trackingNo: "",
+          weight: "",
+          rate: "",
+          subTotal: "",
+          tax: "",
+          total: "",
+          raisedBy: "",
+          description: "",
+          orderID: "",
         }}
         validationSchema={validationSchema}
         onSubmit={handleOnSubmit}
       >
-        <div className='text-left my-4'>
-          <label className='font-bold'>Bill To</label>
-          <div className='flex items-center justify-between bg-slate-200 p-2 rounded-md mt-3'>
-            <select onChange={(e) => setClient(e.target.value)} name='client' className='w-full bg-transparent border-0'>
-              <option value='select'>Customer</option>
-              <option value='select'>Noah Ayodele</option>
-              <option value='select'>David Omokanye</option>
-            </select>
+        <AppFormField name='orderID' title='Order ID' type='text' />
+        <AppFormField name='description' title='Description' type='text' />
+
+        <div className='flex items-center gap-4'>
+          <div className='w-full text-left'>
+            <label>Bill To</label>
+            <div className='w-full p-4 rounded-md border border-gray5 text-gray3'>
+              <select
+                onChange={(e) => setClient(e.target.value)}
+                name='client'
+                className='w-full border-0 bg-none focus:outline-none'
+              >
+                <option value='select'>Customer</option>
+                <option value='select'>Noah Ayodele</option>
+                <option value='select'>David Omokanye</option>
+              </select>
+            </div>
           </div>
+          <AppFormField name='shipTo' title='Ship To' type='text' />
         </div>
-        <AppFormField name='shipTo' title='Ship To' type='text' />
         <AppFormField name='trackingNo' title='Track Number' type='text' />
-        <div className='text-left my-4'>
-          <label className='font-bold'>Status</label>
-          <div className='flex items-center justify-between bg-slate-200 p-2 rounded-md mt-3'>
-            <select onChange={(e) => setStatus(e.target.value)} name='client' className='w-full bg-transparent border-0'>
+        <div className='w-full text-left'>
+          <label>Status</label>
+          <div className='w-full p-4 rounded-md border border-gray5 text-gray3'>
+            <select
+              onChange={(e) => setStatus(e.target.value)}
+              name='client'
+              className='w-full border-0 bg-none focus:outline-none'
+            >
               <option value='select'>Status</option>
               <option value='1'>Active</option>
               <option value='2'>Due</option>
@@ -89,22 +113,37 @@ const NewInvoice = () => {
             </select>
           </div>
         </div>
-        <div className='text-left my-4'>
-          <label className='font-bold'>Category</label>
-          <div className='flex items-center justify-between bg-slate-200 p-2 rounded-md mt-3'>
-            <select onChange={(e) => setStatus(e.target.value)} name='client' className='w-full bg-transparent border-0'>
+        {/* <div className='w-full text-left'>
+          <label>Category</label>
+          <div className='w-full p-4 rounded-md border border-gray5 text-gray3'>
+            <select
+              onChange={(e) => setStatus(e.target.value)}
+              name='client'
+              className='w-full border-0 bg-none focus:outline-none'
+            >
               <option value='select'>Category</option>
               <option value='1'>Due</option>
               <option value='2'>Pending</option>
               <option value='3'>Pending</option>
             </select>
           </div>
+        </div> */}
+        <div className='flex gap-4 items-center'>
+          <AppFormField name='actualWeight' title='Actual Weight' type='text' />
+          <AppFormField
+            name='dimensionalWeight'
+            title='Dimensional Weight'
+            type='text'
+          />
         </div>
-        <AppFormField name='weight' title='Weight' type='number' />
-        <div className='text-left my-4'>
-          <label className='font-bold'>Branch Name</label>
-          <div className='flex items-center justify-between bg-slate-200 p-2 rounded-md mt-3'>
-            <select onChange={(e) => setBranch(e.target.value)} name='client' className='w-full bg-transparent border-0'>
+        <div className='w-full text-left'>
+          <label>Branch Name</label>
+          <div className='w-full p-4 rounded-md border border-gray5 text-gray3'>
+            <select
+              onChange={(e) => setBranch(e.target.value)}
+              name='client'
+              className='w-full border-0 bg-none focus:outline-none'
+            >
               <option value='select'>Select</option>
               <option value='GB-Branch'>GB-Branch</option>
               <option value='YB-Branch'>YB-Branch</option>
@@ -112,26 +151,30 @@ const NewInvoice = () => {
             </select>
           </div>
         </div>
-        <AppFormField name='rate' title='Rate' type='number' />
-        <AppFormField name='subTotal' title='Sub Total' type='number' />
-        <AppFormField name='tax' title='Tax' type='number' />
-        <AppFormField name='total' title='Total' type='number' />
+        {/* <AppFormField name='rate' title='Rate' type='text' /> */}
+
+        <AppFormField name='subTotal' title='Sub Total' type='text' />
+        <AppFormField name='tax' title='Tax' type='text' />
+        <AppFormField name='total' title='Total' type='text' />
         <AppFormField name='raisedBy' title='Raised By' type='text' />
-        <AppFormField name='description' title='Description' type='text' />
-        <AppFormField name='orderID' title='Order ID' type='text' />
-        <div className='text-left my-4'>
-          <label className='font-bold'>Payment Type</label>
-          <div className='flex items-center justify-between bg-slate-200 p-2 rounded-md mt-3'>
-            <select onChange={(e) => setPaymentType(e.target.value)} name='client' className='w-full bg-transparent border-0'>
+
+        {/* <div className='w-full text-left'>
+          <label>Payment Type</label>
+          <div className='w-full p-4 rounded-md border border-gray5 text-gray3'>
+            <select
+              onChange={(e) => setPaymentType(e.target.value)}
+              name='client'
+              className='w-full border-0 bg-none focus:outline-none'
+            >
               <option value='select'>Payment Type</option>
               <option value='1'>CASH</option>
               <option value='2'>POS</option>
               <option value='3'>TRANSFER</option>
             </select>
           </div>
-        </div>
+        </div> */}
         <button
-          className='text-white bg-[#001E4A] py-3 border-0 font-bold m-1 cursor-pointer rounded-md'
+          className='bg-primary text-white py-4 px-10 rounded-full hover:bg-[#EE4700]'
           type='submit'
         >
           Create

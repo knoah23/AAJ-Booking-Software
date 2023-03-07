@@ -1,33 +1,29 @@
 import React from "react";
-import { FiEdit2 } from "react-icons/fi";
-import { MdDeleteOutline, MdContentCopy } from "react-icons/md";
 
 const Userlist = ({ item }) => {
-  const itemStyle = "text-left my-2 font-medium text-sm";
-  const itemType = "text-left my-2 font-medium text-sm text-blue-400";
-
   return (
-    <tr className='w-full'>
-      <td>
-        <input type='checkbox' name='check' />
-      </td>
-      <td className={itemType}>{item.type}</td>
-      <td className={itemStyle}>{item.fullname}</td>
-      <td className={itemStyle}>{item.phone}</td>
-      <td className={itemStyle}>{item.email}</td>
-      <td className={itemStyle}>{item.address}</td>
-      <td className='text-center flex flex-row my-5'>
-        <button>
-          <FiEdit2 />
-        </button>
-        <button>
-          <MdContentCopy />
-        </button>
-        <button>
-          <MdDeleteOutline />
-        </button>
-      </td>
-    </tr>
+    <div className='p-4 bg-white rounded-lg w-1/3'>
+      <div className='flex items-center justify-between'>
+        <div>
+          <h1 className='font-bold text-2xl text-gray-1'>{item.fullname}</h1>
+          <p className='text-xl text-gray-400'>{item.phone}</p>
+        </div>
+        <p className='p-2 text-center rounded-md bg-[#FFF6D7] text-[#FFC700]'>
+          {item.type}
+        </p>
+      </div>
+      <div className='item-center flex justify-between'>
+        <h1>{item.address}</h1>
+        <div className='flex gap-4 items-center'>
+          <button className='bg-[#0066FF] hover:bg-[#024ec0] text-white p-2 w-fit rounded'>
+            Edit
+          </button>
+          <button className='bg-[#E30000] hover:bg-[#a30000] text-white p-2 w-fit rounded'>
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 

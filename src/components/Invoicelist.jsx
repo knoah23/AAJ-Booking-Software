@@ -1,11 +1,12 @@
-import React from 'react';
+import React from "react";
 
 const Invoicelist = ({ item }) => {
-  const itemStyle = 'text-left my-2 font-medium text-sm';
-  const itemType = 'capitalize my-2 text-left text-blue-500 font-medium text-sm';
+  const itemStyle = "p-5";
+  const itemType =
+    "capitalize my-2 text-left text-blue-500 font-medium text-sm";
 
   const Status = ({ status }) => {
-    if (status === 'Unpaid') {
+    if (status === "Unpaid") {
       return (
         <td className='flex flex-row my-5 items-center'>
           <div className='bg-[#FFB800] w-2 h-2 rounded-xl mr-0.5' />
@@ -13,7 +14,7 @@ const Invoicelist = ({ item }) => {
         </td>
       );
     }
-    if (status === 'Overdue') {
+    if (status === "Overdue") {
       return (
         <td className='flex flex-row my-5 items-center'>
           <div className='bg-red-600 w-2 h-2 rounded-xl mr-0.5' />
@@ -21,7 +22,7 @@ const Invoicelist = ({ item }) => {
         </td>
       );
     }
-    if (status === 'Paid') {
+    if (status === "Paid") {
       return (
         <td className='flex flex-row my-5 items-center'>
           <div className='bg-[#00FF66] w-2 h-2 rounded-xl mr-0.5' />

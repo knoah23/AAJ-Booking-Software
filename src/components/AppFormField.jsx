@@ -1,5 +1,5 @@
-import React from "react";
-import { useFormikContext } from "formik";
+import React from 'react';
+import { useFormikContext } from 'formik';
 
 const AppFormField = ({ name, title, type, auto }) => {
   const { values, handleBlur, handleChange, errors, touched } =
@@ -21,9 +21,11 @@ const AppFormField = ({ name, title, type, auto }) => {
           className='w-full border-0 bg-none focus:outline-none'
         />
       </div>
-      {touched[name] && errors[name] ? (
-        <div className='text-red-500'>{errors[name]}</div>
-      ) : null}
+      {touched[name] && errors[name]
+        ? (
+          <div className='text-red-500'>{errors[name]}</div>
+          )
+        : null}
     </div>
   );
 };

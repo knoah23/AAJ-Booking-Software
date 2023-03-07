@@ -30,59 +30,53 @@ const Invoice = () => {
     setIsOpen(false);
   }
 
-  const itemStyle = "my-2 font-bold text-lg text-left";
+  const itemStyle = "p-5";
 
   return (
     <>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel='Test Modal'
-      >
+      <Modal isOpen={modalIsOpen} contentLabel='Test Modal'>
         <Button
-          bgColor='#001E4A'
+          bgColor='black'
           text='Close'
           color='white'
-          size='text-sm'
+          size='text-md'
           borderRadius='5px'
           onclick={closeModal}
         />
         <NewInvoice />
       </Modal>
-      <div className='mt-12'>
-        <div className=' flex justify-center'>
-          <div className='flex flex-col w-full px-32'>
-            <div className='mb-5'>
-              <Button
-                bgColor='black'
-                text='Create New'
-                color='white'
-                size='text-md'
-                borderRadius='5px'
-                onclick={openModal}
-              />
-            </div>
-            <div className='bg-white mt-5 rounded-xl px-6 py-5 w-full'>
-              <table className='w-full'>
-                <tr>
-                  <th>
-                    <input type='checkbox' />
-                  </th>
-                  <th className={itemStyle}>Type</th>
-                  <th className={itemStyle}>Invoice</th>
-                  <th className={itemStyle}>Date & Time</th>
-                  <th className={itemStyle}>Client Name</th>
-                  <th className={itemStyle}>Shipment</th>
-                  <th className={itemStyle}>Total</th>
-                  <th className={itemStyle}>Due Date</th>
-                  <th className={itemStyle}>Status</th>
-                </tr>
-                {invoices.map((item) => (
-                  <Invoicelist key={item.id} item={item} />
-                ))}
-              </table>
-            </div>
-          </div>
+
+      <div className='w-full px-32 text-center flex flex-col justify-center'>
+        <div className='my-5 w-full flex items-center justify-end'>
+          <Button
+            bgColor='black'
+            text='Create New'
+            color='white'
+            size='text-md'
+            borderRadius='5px'
+            onclick={openModal}
+          />
+        </div>
+        <div className='mt-5 w-full rounded-lg'>
+          <table className='table-auto w-full text-left text-[#1E1E1E]'>
+            <thead className='bg-[#F5F5F5]'>
+              <tr>
+                <th className={itemStyle}>Type</th>
+                <th className={itemStyle}>Invoice</th>
+                <th className={itemStyle}>Date & Time</th>
+                <th className={itemStyle}>Client Name</th>
+                <th className={itemStyle}>Shipment</th>
+                <th className={itemStyle}>Total</th>
+                <th className={itemStyle}>Due Date</th>
+                <th className={itemStyle}>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {invoices.map((item) => (
+                <Invoicelist key={item.id} item={item} />
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </>
