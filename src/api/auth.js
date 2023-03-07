@@ -1,7 +1,7 @@
-import bookingClient from './bookingClient';
-import orgClient from './orgClient';
+import bookingClient from "./bookingClient";
+import orgClient from "./orgClient";
 
-const endpoint = 'auth/';
+const endpoint = "auth/";
 
 const login = async (body) => {
   const response = await bookingClient.post(`${endpoint}login/`, body);
@@ -24,11 +24,12 @@ const getAccountData = async (id) => {
 };
 
 const createAccessToken = async (clientSecret, clientId) => {
-  const response = await orgClient.post('o/token/', {
-    client_id: clientId,
-    client_secret: clientSecret,
-    grant_type: 'client_credentials',
-    redirect_uri: 'http://localhost:3000/'
+  const response = await orgClient.post("o/token/", {
+    client_id: "NFkJNIgBCH759xONkNKzHoa6XetgzwHxILB2qxPS",
+    client_secret:
+      "bfTzH2c9YgmHQxtFLYnntYqwtBJ3WwPZo3fLqDBA7et69g2DU1RaVaRHYdhfX6Mj6Puc7sPW6KyKu9LsVSHv8OJxjTYB3oEs1Rv4a3OR2WTSAJjbbz5d4y10rfzLvChb",
+    grant_type: "client_credentials",
+    redirect_uri: "http://localhost:3000/",
   });
   return response;
 };
@@ -39,5 +40,5 @@ export default {
   logout,
   logoutAll,
   getAccountData,
-  createAccessToken
+  createAccessToken,
 };
