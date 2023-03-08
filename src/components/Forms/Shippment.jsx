@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { BackHeader, Button, Quote } from '..';
-import Modal from 'react-modal';
-import ordersApi from '../../api/orders';
-import Loader from '../Loader';
+import React, { useState } from "react";
+import { BackHeader, Button, Quote } from "..";
+import Modal from "react-modal";
+import ordersApi from "../../api/orders";
+import Loader from "../Loader";
 
 const Shippment = () => {
   const [courier, setCourier] = useState();
@@ -19,24 +19,20 @@ const Shippment = () => {
   const [loading, setLoading] = useState(false);
   const [quote, setQuote] = useState({});
 
-  function openModal () {
+  function openModal() {
     setIsOpen(true);
   }
 
-  function closeModal () {
+  function closeModal() {
     setIsOpen(false);
   }
 
   const handleOnSubmit = async () => {
     setLoading(true);
-    const sender = JSON.parse(
-      window.sessionStorage.getItem('sender')
-    );
-    const receiver = JSON.parse(
-      window.sessionStorage.getItem('receiver')
-    );
-    const packages = JSON.parse(window.sessionStorage.getItem('packages'));
-    const userData = JSON.parse(window.localStorage.getItem('userData'));
+    const sender = JSON.parse(window.sessionStorage.getItem("sender"));
+    const receiver = JSON.parse(window.sessionStorage.getItem("receiver"));
+    const packages = JSON.parse(window.sessionStorage.getItem("packages"));
+    const userData = JSON.parse(window.localStorage.getItem("userData"));
     const body = {
       receiver_name: receiver.receiver_name,
       receiver_address: receiver.receiver_address,
@@ -59,12 +55,12 @@ const Shippment = () => {
       number_of_packages: packages.length,
       description,
       package_value_claim: 0,
-      fish_shipment: fishShipment === 'on',
+      fish_shipment: fishShipment === "on",
       served_by: `${userData.payload.employee.first_name} ${userData.payload.employee.last_name}`,
-      branch_name: `${userData.payload.branch.name}`
+      branch_name: `${userData.payload.branch.name}`,
     };
     const response = await ordersApi.createOrder(body);
-    if (!response.ok) return (setLoading(false), console.log(response.data));
+    if (!response.ok) return setLoading(false), console.log(response.data);
     setQuote(response.data[0].payload.quote);
     setLoading(false);
     openModal();
@@ -112,7 +108,7 @@ const Shippment = () => {
             </div>
           </div>
 
-          <div className='w-full'>
+          {/* <div className='w-full'>
             <label>Weight</label>
             <div className='flex w-full items-center justify-between p-4 rounded-md border border-gray5 text-gray3'>
               <input
@@ -149,7 +145,7 @@ const Shippment = () => {
                 type='number'
               />
             </div>
-          </div>
+          </div> */}
 
           <div className='w-full'>
             <label>Courier</label>
@@ -232,24 +228,45 @@ const Shippment = () => {
           </div>
 
           {/* Mailcious */}
-          <div className='w-full'>
-            <label>Mailcious</label>
-            <div className='flex w-full items-center justify-between  p-4 rounded-md border border-gray5 text-gray3'>
-              <select
-                // onChange={(e) => setInsurance(e.target.value)}
-                name='client'
-                className='w-full bg-transparent border-0'
-              >
-                <option value='select'>Ziploc</option>
-                <option value='FR'>Free</option>
-                <option value='PM'>Premium</option>
-                <option value='SD'>Standard</option>
-              </select>
+          <div className='flex items-center justify-center gap-4'>
+            <div className='w-full'>
+              <label>Mailcious</label>
+              <div className='flex w-full items-center justify-between  p-4 rounded-md border border-gray5 text-gray3'>
+                <select
+                  // onChange={(e) => setInsurance(e.target.value)}
+                  name='client'
+                  className='w-full bg-transparent border-0'
+                >
+                  <option value='select'>None</option>
+                  <option value='FR'>Ziploc</option>
+                  <option value='PM'>Polystyrene</option>
+                  <option value='SD'>Carton</option>
+                </select>
+              </div>
+            </div>
+
+            <div className='w-full'>
+              <label>Amount</label>
+              <div className='flex w-full items-center justify-between p-4 rounded-md border border-gray5 text-gray3'>
+                <input
+                  onChange={(e) => setTotal(e.target.value)}
+                  name='client'
+                  className='w-full bg-transparent border-0'
+                  placeholder='Total'
+                  type='number'
+                />
+              </div>
             </div>
           </div>
 
           <div className='flex items-center w-full my-3'>
-            <input onChange={(e) => setFishShipment(e.target.value)} type='checkbox' name='Fish' id='1' className='mr-3' />
+            <input
+              onChange={(e) => setFishShipment(e.target.value)}
+              type='checkbox'
+              name='Fish'
+              id='1'
+              className='mr-3'
+            />
             <label>Fish Shipment</label>
           </div>
 
