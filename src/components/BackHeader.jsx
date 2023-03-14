@@ -12,7 +12,7 @@ const BackHeader = () => {
         onClick={goBack}
         className='bg-[#FF4D00] text-center justify-center text-white w-20 px-4 py-2 rounded-md cursor-pointer flex items-center gap-2'
       >
-        Back
+        Cancel
       </div>
     </div>
   );

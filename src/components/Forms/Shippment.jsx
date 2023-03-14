@@ -1,42 +1,52 @@
-import React, { useState } from "react";
-import { BackHeader, Button, Quote } from "..";
-import Modal from "react-modal";
-import ordersApi from "../../api/orders";
-import Loader from "../Loader";
+import React, { useState } from 'react';
+import { BackHeader, Button, Quote } from '..';
+import Modal from 'react-modal';
+import ordersApi from '../../api/orders';
+import Loader from '../Loader';
 
 const Shippment = () => {
   const [courier, setCourier] = useState();
   const [bookingType, setBookingType] = useState();
   const [insurance, setInsurance] = useState();
-  const [weight, setWeight] = useState();
-  const [rate, setRate] = useState();
+  // const [weight, setWeight] = useState();
+  // const [rate, setRate] = useState();
   const [location, setLocation] = useState();
-  const [subTotal, setSubtotal] = useState();
-  const [total, setTotal] = useState();
+  // const [subTotal, setSubtotal] = useState();
+  // const [total, setTotal] = useState();
   const [description, setDescription] = useState();
   const [fishShipment, setFishShipment] = useState();
   const [modalIsOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [quote, setQuote] = useState({});
 
-  function openModal() {
+  function openModal () {
     setIsOpen(true);
   }
 
-  function closeModal() {
+  function closeModal () {
     setIsOpen(false);
   }
 
   const handleOnSubmit = async () => {
     setLoading(true);
-    const sender = JSON.parse(window.sessionStorage.getItem("sender"));
-    const receiver = JSON.parse(window.sessionStorage.getItem("receiver"));
-    const packages = JSON.parse(window.sessionStorage.getItem("packages"));
-    const userData = JSON.parse(window.localStorage.getItem("userData"));
+    const sender = JSON.parse(window.sessionStorage.getItem('sender'));
+    const receiver = JSON.parse(window.sessionStorage.getItem('receiver'));
+    const packages = JSON.parse(window.sessionStorage.getItem('packages'));
+    const userData = JSON.parse(window.localStorage.getItem('userData'));
     const body = {
       receiver_name: receiver.receiver_name,
       receiver_address: receiver.receiver_address,
       receiver_phone: receiver.receiver_phone,
+      sender_country: sender.sender_country,
+      receiver_country: receiver.receiver_country,
+      sender_postcode: sender.sender_postcode,
+      receiver_postcode: receiver.receiver_postcode,
+      sender_city: sender.sender_city,
+      receiver_city: receiver.receiver_city,
+      sender_state: sender.sender_state,
+      sender_country_code: sender.sender_country_code,
+      receiver_country_code: receiver.receiver_country_code,
+      receiver_state: receiver.receiver_state,
       sender_name: sender.sender_name,
       sender_address: sender.sender_address,
       sender_phone: sender.sender_phone,
@@ -44,24 +54,24 @@ const Shippment = () => {
       tpl_service: courier,
       type: bookingType,
       location,
-      shipment_rate: rate,
+      // shipment_rate: rate,
       package_insurance: insurance,
       packages,
       order_state: 1,
       booking_state: 1,
-      weight,
-      total,
-      sub_total: subTotal,
-      number_of_packages: packages.length,
+      // weight: weight * 1,
+      // total: total * 1,
+      // sub_total: subTotal * 1,
+      // number_of_packages: packages.packages.length,
       description,
       package_value_claim: 0,
-      fish_shipment: fishShipment === "on",
+      fish_shipment: fishShipment === 'on',
       served_by: `${userData.payload.employee.first_name} ${userData.payload.employee.last_name}`,
-      branch_name: `${userData.payload.branch.name}`,
+      branch_name: `${userData.payload.branch.name}`
     };
     const response = await ordersApi.createOrder(body);
-    if (!response.ok) return setLoading(false), console.log(response.data);
-    setQuote(response.data[0].payload.quote);
+    if (!response.ok) return (setLoading(false), console.log(response.data));
+    setQuote(response.data[0].payload);
     setLoading(false);
     openModal();
   };
@@ -100,6 +110,7 @@ const Shippment = () => {
             <div className='flex w-full items-center justify-between p-4 rounded-md border border-gray5 text-gray3'>
               <input
                 onChange={(e) => setDescription(e.target.value)}
+                value={description}
                 name='client'
                 className='w-full bg-transparent border-0'
                 placeholder='Description'
@@ -119,9 +130,9 @@ const Shippment = () => {
                 type='number'
               />
             </div>
-          </div>
+          </div> */}
 
-          <div className='w-full'>
+          {/* <div className='w-full'>
             <label>Sub Total Price</label>
             <div className='flex w-full items-center justify-between p-4 rounded-md border border-gray5 text-gray3'>
               <input
@@ -152,6 +163,7 @@ const Shippment = () => {
             <div className='flex w-full items-center justify-between  p-4 rounded-md border border-gray5 text-gray3'>
               <select
                 onChange={(e) => setCourier(e.target.value)}
+                value={courier}
                 name='client'
                 className='w-full bg-transparent border-0'
               >
@@ -162,7 +174,7 @@ const Shippment = () => {
             </div>
           </div>
 
-          <div className='w-full'>
+          {/* <div className='w-full'>
             <label>Shipment Rate</label>
             <div className='flex w-full items-center justify-between  p-4 rounded-md border border-gray5 text-gray3'>
               <select
@@ -175,18 +187,19 @@ const Shippment = () => {
                 <option value='CR'>Cargo Rate</option>
               </select>
             </div>
-          </div>
+          </div> */}
 
           {/* Type */}
           <div className='w-full'>
-            <label>Booking Type</label>
+            <label>Shipment Type</label>
             <div className='flex w-full items-center justify-between  p-4 rounded-md border border-gray5 text-gray3'>
               <select
                 name='transport'
                 className='w-full bg-transparent border-0'
                 onChange={(e) => setBookingType(e.target.value)}
+                value={bookingType}
               >
-                <option value='select'>Booking Type</option>
+                <option value='select'>Shipment Type</option>
                 <option value='LC'>Local</option>
                 <option value='IN'>International</option>
               </select>
@@ -199,6 +212,7 @@ const Shippment = () => {
             <div className='flex w-full items-center justify-between  p-4 rounded-md border border-gray5 text-gray3'>
               <select
                 onChange={(e) => setLocation(e.target.value)}
+                value={location}
                 name='client'
                 className='w-full bg-transparent border-0'
               >
@@ -206,6 +220,26 @@ const Shippment = () => {
                 <option value='US'>USA</option>
                 <option value='LND'>London</option>
                 <option value='CA'>Canada</option>
+                <option value='EUR'>Europe</option>
+                <option value='ROU'>Rest Of UK</option>
+                <option value='GH'>Ghana</option>
+                <option value='ZA'>South Africa</option>
+                <option value='WA'>West Africa</option>
+                <option value='AUS'>Australia</option>
+                <option value='ROW'>Rest Of World</option>
+                <option value='IS'>Isreal</option>
+                <option value='ME'>Middle East</option>
+                <option value='SA'>South America</option>
+                <option value='UK'>United Kingdom</option>
+                <option value='Z1'>Zone One (Local)</option>
+                <option value='Z2'>Zone Two (Local)</option>
+                <option value='Z3'>Zone Three (Local)</option>
+                <option value='ABT'>Abeokuta (Local)</option>
+                <option value='OS'>Osun (Local)</option>
+                <option value='ABA'>Aba (Local)</option>
+                <option value='ABJ'>Abuja (Local)</option>
+                <option value='BAC'>Bauchi (Local)</option>
+                <option value='GO'>Gombe (Local)</option>
               </select>
             </div>
           </div>
@@ -216,6 +250,7 @@ const Shippment = () => {
             <div className='flex w-full items-center justify-between  p-4 rounded-md border border-gray5 text-gray3'>
               <select
                 onChange={(e) => setInsurance(e.target.value)}
+                value={insurance}
                 name='client'
                 className='w-full bg-transparent border-0'
               >
@@ -227,41 +262,10 @@ const Shippment = () => {
             </div>
           </div>
 
-          {/* Mailcious */}
-          <div className='flex items-center justify-center gap-4'>
-            <div className='w-full'>
-              <label>Mailcious</label>
-              <div className='flex w-full items-center justify-between  p-4 rounded-md border border-gray5 text-gray3'>
-                <select
-                  // onChange={(e) => setInsurance(e.target.value)}
-                  name='client'
-                  className='w-full bg-transparent border-0'
-                >
-                  <option value='select'>None</option>
-                  <option value='FR'>Ziploc</option>
-                  <option value='PM'>Polystyrene</option>
-                  <option value='SD'>Carton</option>
-                </select>
-              </div>
-            </div>
-
-            <div className='w-full'>
-              <label>Amount</label>
-              <div className='flex w-full items-center justify-between p-4 rounded-md border border-gray5 text-gray3'>
-                <input
-                  onChange={(e) => setTotal(e.target.value)}
-                  name='client'
-                  className='w-full bg-transparent border-0'
-                  placeholder='Total'
-                  type='number'
-                />
-              </div>
-            </div>
-          </div>
-
           <div className='flex items-center w-full my-3'>
             <input
               onChange={(e) => setFishShipment(e.target.value)}
+              value={fishShipment}
               type='checkbox'
               name='Fish'
               id='1'

@@ -7,11 +7,10 @@ const OrderModal = ({ data, handleOnClose }) => {
     <div className='flex bg-white p-10 gap-10 text-center flex-col rounded-lg mt-6'>
       <div className='pb-6 border-b-1 border-[#E0E0E0]'>
         <h1 className='font-bold text-4xl'>
-          {data.total}
-          <span className='text-sm text-[#FF4D00]'>NGN</span>
+          {data.total.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}
         </h1>
         <p className='text-[#828282] '>
-          {data.weight}kg | #{data.id} | {data.shipment_rate === 'CR' && 'Cargo Rate'}
+          {data.weight}kg | #{data.id} | {data.shipment_rate === 'CR' ? 'Cargo Rate' : 'Standard Rate'}
         </p>
       </div>
 
@@ -44,17 +43,17 @@ const OrderModal = ({ data, handleOnClose }) => {
       <div className='text-left'>
         <h1 className='text-xl text-[#FF4D00]'>Items</h1>
 
-        {data.packages.map(item => (
-          <div key={item.actualWeight} className='flex gap-6 text-[#333333] text-left items-center'>
+        {data.packages.items.map((item, index) => (
+          <div key={index} className='flex gap-6 text-[#333333] text-left items-center'>
             <div className='flex justify-center items-center bg-gray-200 rounded-full w-16 h-16'>
-              <p className='text-lg font-bold text-[#FF4D00]'>{item.items.length}</p>
+              <p className='text-lg font-bold text-[#FF4D00]'>{item.quantity}</p>
             </div>
             <div className='flex items-center justify-between w-full py-5 border-b-1 border-gray-100'>
               <div>
-                <h1 className='font-bold'>{item.description}</h1>
-                <p className='text-[#828282]'>{item.category} | {item.dimensionWeight}kg</p>
+                <h1 className='font-bold'>{item.name}</h1>
+                <p className='text-[#828282]'>{item.value.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })} | {item.hsCode}</p>
               </div>
-              <p className='font-bold text-xl'>{item.itemsValue.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}</p>
+              {/* <p className='font-bold text-xl'>{item.itemsValue.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}</p> */}
             </div>
           </div>
         ))}

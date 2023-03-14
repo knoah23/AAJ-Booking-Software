@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import logo from '../assets/logo.png';
+import logo from "../assets/logo.png";
 
 const Navbar1 = () => {
   const handleOnPressLogout = () => {
-    if (window.confirm('Are you sure you want to log out?')) {
-      window.localStorage.removeItem('token');
-      window.location.replace('/login');
+    if (window.confirm("Are you sure you want to log out?")) {
+      window.localStorage.removeItem("token");
+      window.location.replace("/login");
     }
   };
 
@@ -36,11 +36,11 @@ const Navbar1 = () => {
             Reciept
           </a>
         </li>
-        <li>
+        {/* <li>
           <a href='/Users' className='hover:text-primary'>
             Users
           </a>
-        </li>
+        </li> */}
       </ul>
       <button
         onClick={handleOnPressLogout}

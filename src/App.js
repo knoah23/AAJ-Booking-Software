@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate
-} from 'react-router-dom';
-import { FiSettings } from 'react-icons/fi';
-import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+  Navigate,
+} from "react-router-dom";
+import { FiSettings } from "react-icons/fi";
+import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 
-import { Navbar, Shippment } from './components';
+import { Navbar, Shippment } from "./components";
 import {
   Dashboard,
   Orders,
@@ -19,20 +19,21 @@ import {
   Login,
   CustomerInfo,
   PackageSection,
-  ShipmentSection
-} from './pages';
+  ShipmentSection,
+  InvoiceView,
+} from "./pages";
 
-import { useStateContext } from './context/ContextProvider';
-import Loader from './components/Loader';
+import { useStateContext } from "./context/ContextProvider";
+import Loader from "./components/Loader";
 
-function App () {
+function App() {
   const { activeMenu } = useStateContext();
   const [loggedIn, setLoggedIn] = useState(true);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
-    const token = window.localStorage.getItem('authToken');
+    const token = window.localStorage.getItem("authToken");
     if (!token) {
       setLoggedIn(false);
     }
@@ -68,6 +69,7 @@ function App () {
           <Route path='/CustomerInfo' element={<CustomerInfo />} />
           <Route path='/PackageSection' element={<PackageSection />} />
           <Route path='/ShipmentSection' element={<Shippment />} />
+          <Route path='/InvoiceView' element={<InvoiceView />} />
         </Routes>
       </Router>
     </div>

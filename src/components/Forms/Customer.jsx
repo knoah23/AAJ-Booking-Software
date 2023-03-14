@@ -1,108 +1,130 @@
-import React, { useEffect, useState } from "react";
-import ReactSwap from "react-swap";
-import { AppForm, AppFormField } from "..";
-import * as yup from "yup";
-import { Country, State, City } from "country-state-city";
+import React, { useEffect, useState } from 'react';
+import ReactSwap from 'react-swap';
+import { AppForm, AppFormField } from '..';
+import * as yup from 'yup';
+import { Country, State, City } from 'country-state-city';
 
-import { BiSearch } from "react-icons/bi";
-import AddressBook from "../AddressBook";
-import { IoMdAdd } from "react-icons/io";
+import { BiSearch } from 'react-icons/bi';
+import AddressBook from '../AddressBook';
+import { IoMdAdd } from 'react-icons/io';
 
-import PhoneInput from "react-phone-number-input";
-import "react-phone-number-input/style.css";
-import customerApi from "../../api/customer";
-import useApi from "../../hooks/useApi";
-import Loader from "../Loader";
+import PhoneInput from 'react-phone-number-input';
+import 'react-phone-number-input/style.css';
+import customerApi from '../../api/customer';
+import useApi from '../../hooks/useApi';
+import Loader from '../Loader';
 
 const validationSchema = yup.object().shape({
-  fullName: yup.string().required("Full Name is Required"),
-  address: yup.string().required("Address is Required"),
-  email: yup
-    .string()
-    .email("Must be a valid email address")
-    .required("Email is Required"),
-  postcode: yup.number().required("Postal Code is Required"),
+  fullName: yup.string().required('Full Name is Required'),
+  address: yup.string().required('Address is Required'),
+  email: yup.string().email('Must be a valid email address').required('Email is Required'),
+  postcode: yup.number().required('Postal Code is Required')
 });
 
 const Customer = () => {
-  const [value, setValue] = useState("off");
+  const [value, setValue] = useState('off');
   const [country, setCountry] = useState(Country.getAllCountries()[0].isoCode);
-  const [state, setState] = useState(
-    State.getStatesOfCountry(country)[0].isoCode
-  );
-  const [city, setCity] = useState(City.getCitiesOfState(country, state)[0]);
-  const [saveCustomer, setSaveCustomer] = useState("off");
+  const [state, setState] = useState(State.getStatesOfCountry(country)[0].isoCode);
+  const [city, setCity] = useState();
   const [isPartner, setIsPartner] = useState();
   const [search, setSearch] = useState(false);
   const [searchedCustomers, setSearchedCustomers] = useState();
 
-  const {
-    data,
-    loading,
-    request: loadCustomers,
-  } = useApi(customerApi.getCustomers);
+  const { data, loading, request: loadCustomers } = useApi(customerApi.getCustomers);
 
   useEffect(() => {
     loadCustomers();
   }, []);
 
-  const handleOnSubmit = async ({ fullName, address, email, postcode }) => {
+  const handleOnSubmit = async ({
+    fullName,
+    address,
+    email,
+    postcode
+  }) => {
     // const userData = await JSON.parse(window.localStorage.getItem('userData'));
-    const cusType = window.location.href.split("?")[1];
-    if (saveCustomer === "on") {
-      const result = await customerApi.createCustomer({
-        email,
-        full_name: fullName,
-        phone_number: value,
-        address,
-        city,
-        state,
-        country: Country.getCountryByCode(country).name,
-        credit: 0,
-        partner: isPartner === "on",
-        // user: userData.payload.employee.id
-      });
-      if (!result.ok)
-        return (
-          console.log(result.data),
-          window.alert("Customer could not be added to address box")
-        );
-      window.alert("Customer saved to address box");
+    const cusType = window.location.href.split('?')[1];
+    const result = await customerApi.createCustomer({
+      email,
+      full_name: fullName,
+      phone_number: value,
+      address,
+      city,
+      state,
+      country: Country.getCountryByCode(country).name,
+      code: country,
+      postcode: postcode,
+      credit: 0,
+      partner: isPartner === 'on'
+      // user: userData.payload.employee.id
+    });
+    if (!result.ok) return (console.log(result.data), window.alert('Customer could not be added to address box'));
+    window.alert('Customer saved to address box');
+
+    if (cusType === 'sender') {
+      window.sessionStorage.setItem('sender', JSON.stringify({
+        sender_name: fullName,
+        sender_address: address,
+        sender_phone: value,
+        sender_country: Country.getCountryByCode(country).name,
+        sender_city: city.name,
+        sender_state: state,
+        sender_postcode: postcode,
+        sender_country_code: country,
+        partner: isPartner === 'on',
+        id: result.data.id
+      }));
+      window.location.replace('/customerinfo?receiver');
     }
 
-    if (cusType === "sender") {
-      window.sessionStorage.setItem(
-        "sender",
-        JSON.stringify({
-          sender_name: fullName,
-          sender_address: address,
-          sender_phone: value,
-          sender_country: Country.getCountryByCode(country).name,
-          sender_city: city,
-          sender_state: state,
-          sender_postcode: postcode,
-          sender_country_code: country,
-          partner: isPartner === "on",
-        })
-      );
-      window.location.replace("/customerinfo?receiver");
+    if (cusType === 'receiver') {
+      window.sessionStorage.setItem('receiver', JSON.stringify({
+        receiver_name: fullName,
+        receiver_address: address,
+        receiver_phone: value,
+        receiver_country: Country.getCountryByCode(country).name,
+        receiver_city: city,
+        receiver_state: state,
+        receiver_postcode: postcode,
+        receiver_country_code: country,
+        id: result.data.id
+      }));
+      window.location.replace('/packagesection');
+    }
+  };
+
+  const handleOnClickUser = (item) => {
+    const cusType = window.location.href.split('?')[1];
+
+    if (cusType === 'sender') {
+      window.sessionStorage.setItem('sender', JSON.stringify({
+        sender_name: item.full_name,
+        sender_address: item.address,
+        sender_phone: item.phone_number,
+        sender_country: Country.getAllCountries().find(country => country.name === item.country).name,
+        sender_city: item.city,
+        sender_state: item.state,
+        sender_postcode: item.postcode,
+        sender_country_code: Country.getAllCountries().find(country => country.name === item.country).isoCode,
+        partner: item.partner,
+        id: item.id
+      }));
+      window.location.replace('/customerinfo?receiver');
     }
 
-    if (cusType === "receiver") {
-      window.sessionStorage.setItem(
-        "receiver",
-        JSON.stringify({
-          receiver_name: fullName,
-          receiver_address: address,
-          receiver_phone: value,
-          receiver_country: Country.getCountryByCode(country).name,
-          receiver_city: city,
-          receiver_state: state,
-          receiver_postcode: postcode,
-          receiver_country_code: country,
-        })
-      );
-      window.location.replace("/packagesection");
+    if (cusType === 'receiver') {
+      window.sessionStorage.setItem('receiver', JSON.stringify({
+        receiver_name: item.full_name,
+        receiver_address: item.address,
+        receiver_phone: item.phone_number,
+        receiver_country: Country.getAllCountries().find(country => country.name === item.country).name,
+        receiver_city: item.city,
+        receiver_state: item.state,
+        receiver_postcode: item.postcode,
+        receiver_country_code: Country.getAllCountries().find(country => country.name === item.country).isoCode,
+        id: item.id
+      }));
+      window.location.replace('/packagesection');
     }
   };
 
@@ -111,7 +133,7 @@ const Customer = () => {
   const handleOnSearch = (e) => {
     setSearch(true);
     const value = e.target.value;
-    const customers = data.filter((item) => {
+    const customers = data.filter(item => {
       return item.full_name.toLowerCase().includes(value.toLowerCase());
     });
     setSearchedCustomers(customers);
@@ -121,10 +143,10 @@ const Customer = () => {
     <div className='flex text-center flex-col justify-evenly my-3 pb-8'>
       <AppForm
         initialValues={{
-          fullName: "",
-          address: "",
-          email: "",
-          postcode: "",
+          fullName: '',
+          address: '',
+          email: '',
+          postcode: ''
         }}
         validationSchema={validationSchema}
         onSubmit={handleOnSubmit}
@@ -155,10 +177,16 @@ const Customer = () => {
             <div>
               <h1 className='text-[#FF4D00] text-xl mb-2'>Address Books</h1>
               {!search
-                ? data.map((item) => <AddressBook key={item.id} item={item} />)
-                : searchedCustomers.map((item) => (
-                    <AddressBook key={item.id} item={item} />
-                  ))}
+                ? (
+                    data.map((item) => (
+                      <AddressBook key={item.id} item={item} handleOnClick={() => handleOnClickUser(item)} />
+                    ))
+                  )
+                : (
+                    searchedCustomers.map((item) => (
+                      <AddressBook key={item.id} item={item} handleOnClick={() => handleOnClickUser(item)} />
+                    ))
+                  )}
             </div>
           </div>
           {/* New Customer */}
@@ -186,11 +214,10 @@ const Customer = () => {
                     name='city'
                     className='bg-transparent border-0 w-full focus:outline-none'
                     onChange={(e) => setCity(e.target.value)}
+                    value={city}
                   >
                     {City.getCitiesOfState(country, state).map((city) => (
-                      <option key={city.name} value={city.name}>
-                        {city.name}
-                      </option>
+                      <option key={city.name} value={city.name}>{city.name}</option>
                     ))}
                   </select>
                 </div>
@@ -203,11 +230,10 @@ const Customer = () => {
                     name='client'
                     className=' bg-transparent border-0 w-full focus:outline-none'
                     onChange={(e) => setState(e.target.value)}
+                    value={state}
                   >
                     {State.getStatesOfCountry(country).map((state) => (
-                      <option key={state.name} value={state.isoCode}>
-                        {state.name}
-                      </option>
+                      <option key={state.name} value={state.isoCode}>{state.name}</option>
                     ))}
                   </select>
                 </div>
@@ -222,11 +248,10 @@ const Customer = () => {
                     name='country'
                     className='bg-transparent border-0 w-full focus:outline-none'
                     onChange={(e) => setCountry(e.target.value)}
+                    value={country}
                   >
                     {Country.getAllCountries().map((country) => (
-                      <option key={country.name} value={country.isoCode}>
-                        {country.name}
-                      </option>
+                      <option key={country.name} value={country.isoCode}>{country.name}</option>
                     ))}
                   </select>
                 </div>
@@ -241,20 +266,14 @@ const Customer = () => {
               value={value}
               onChange={(e) => setValue(e)}
             />
-            <AppFormField name='email' title='Email Address' type='email' />
-            {/* <div className='flex items-center w-full my-3'>
+            <AppFormField
+              name='email'
+              title='Email Address'
+              type='email'
+            />
+            <div className='flex items-center w-full my-3'>
               <input onChange={(e) => setIsPartner(e.target.value)} type='checkbox' name='Save' id='1' className='mr-3' />
               <label>Partner</label>
-            </div> */}
-            <div className='flex items-center w-full my-3'>
-              <input
-                onChange={(e) => setSaveCustomer(e.target.value)}
-                type='checkbox'
-                name='Save'
-                id='1'
-                className='mr-3'
-              />
-              <label>Save to address box</label>
             </div>
             <button
               className='bg-primary text-white py-4 px-10 rounded-full hover:bg-[#EE4700]'

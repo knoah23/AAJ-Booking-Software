@@ -43,7 +43,7 @@ const generateQuote = async (body) => {
 };
 
 const processOrder = async (id, body) => {
-  const response = await bookingClient.post(`${endpoint}${id}process_order/`, body);
+  const response = await bookingClient.post(`${endpoint}${id}/process_order/`, body);
   return response;
 };
 
